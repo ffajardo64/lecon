@@ -1,0 +1,1759 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="aula1_files/libs/clipboard/clipboard.min.js"></script>
+<script src="aula1_files/libs/quarto-html/tabby.min.js"></script>
+<script src="aula1_files/libs/quarto-html/popper.min.js"></script>
+<script src="aula1_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="aula1_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="aula1_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="aula1_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.2.475">
+
+  <meta name="author" content="LECON/DEST - UFES">
+  <title>Estatística robusta</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="aula1_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="aula1_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+  <link rel="stylesheet" href="aula1_files/libs/revealjs/dist/theme/quarto.css" id="theme">
+  <link href="aula1_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="aula1_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="aula1_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="aula1_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="aula1_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="aula1_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-captioned.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-captioned) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-captioned.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-captioned .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-captioned .callout-caption  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-captioned.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-captioned.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-caption {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-caption {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-caption {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-captioned .callout-body > .callout-content > :last-child {
+    margin-bottom: 0.5rem;
+  }
+
+  .callout.callout-captioned .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-captioned) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-caption {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-caption {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-caption {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-caption {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-caption {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-background-color="#172a46" data-background-opacity="number" data-background-size="contain" class="quarto-title-block center">
+  <h1 class="title">Estatística robusta</h1>
+  <p class="subtitle"><br><br></p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+LECON/DEST - UFES 
+</div>
+        <p class="quarto-title-affiliation">
+            Última atualização: 31 maio, 2023
+          </p>
+    </div>
+</div>
+
+</section>
+<section id="motivação" class="slide level2">
+<h2>Motivação</h2>
+<div style="text-align: justify">
+
+<p>Do ponto de vista técnico o termo <strong>robusto</strong> aplica-se geralmente a um processo que é capaz de manter determinado comportamento mesmo quando haja algum tipo de perturbação das condições habituais do seu funcionamento.</p>
+<blockquote>
+<p>Em estatística, um procedimento é chamado de <span color="blue"><u>robusto</u></span> se seu resultado não apresenta grandes alterações na presença de pequenos desvios das suposições comumente feitas (por exemplo, normalidade, linearidade, independência, entre outras).</p>
+</blockquote>
+<p>Tais alterações geralmente aparecem como dados atípicos ou <strong>outliers</strong>, que são dados considerados distantes do restante das observações. Esses dados são considerados <span class="fragment highlight-red" data-fragment-index="1">“perigosos”</span> para muitos procedimentos estatísticos clássicos, pois causam efeitos significativos nas propriedades estatísticas dos estimadores e, em geral, nas técnicas inferenciais clássicas.<sup>1</sup></p>
+<hr>
+</div><aside><ol class="aside-footnotes"><li id="fn1"><p>Para detalhes, vide <span class="citation" data-cites="maronna:martin:yohai:2006">Maronna et al. (<a href="#/referências" role="doc-biblioref" onclick="">2006</a>)</span>, <span class="citation" data-cites="huber:2004">Huber (<a href="#/referências" role="doc-biblioref" onclick="">2004</a>)</span> e <span class="citation" data-cites="hampel:ronchetti:rousseeuw:stahel:1986">Hampel et al. (<a href="#/referências" role="doc-biblioref" onclick="">1986</a>)</span>.</p></li></ol></aside></section>
+<section id="motivação-1" class="slide level2">
+<h2>Motivação</h2>
+<div style="text-align: justify">
+
+<div id="exm-exemplo1" class="theorem example">
+<p><span class="theorem-title"><strong>Exemplo 1 </strong></span><span class="citation" data-cites="maronna:martin:yohai:2006">(<a href="#/referências" role="doc-biblioref" onclick="">Maronna et al. 2006,p. 2</a>)</span> Considere as seguintes 24 determinações do teor de cobre em farinha integral (em partes por milhão), classificadas em ordem crescente:</p>
+<div class="columns">
+<div class="column" style="width:30%;">
+<div class="box">
+<p><font size="5"><strong>Dados:</strong> 2.20, 2.20, 2.40, 2.40, 2.50, 2.70, 2.80, 2.90, 3.03, 3.03, 3.10, 3.37, 3.40, 3.40, 3.40, 3.50, 3.60, 3.70, 3.70, 3.70, 3.70, 3.77, 5.28, <span class="fragment highlight-red" data-fragment-index="1">28.95</span></font></p>
+</div>
+<p><br></p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Resumo Estatístico: 
+
+count    24.000000
+mean      4.280417
+std       5.297396
+min       2.200000
+25%       2.775000
+50%       3.385000
+75%       3.700000
+max      28.950000
+dtype: float64</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:70%;">
+<div class="r-stack">
+<div class="fragment fade-out" data-fragment-index="1">
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-bar" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="aula1_files/figure-revealjs/fig-bar-1.png" width="960"></p>
+<p></p><figcaption>Figura&nbsp;1: Diagrama de pontos dos dados teor de cobre.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment fade-in" data-fragment-index="1">
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-bar2" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="aula1_files/figure-revealjs/fig-bar2-3.png" width="960"></p>
+<p></p><figcaption>Figura&nbsp;2: Boxplot do dados de teor de cobre.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Fim Columnas -->
+</div>
+<!-- Fim exemplo -->
+</div></section>
+<section id="motivação-2" class="slide level2">
+<h2>Motivação</h2>
+<div style="text-align: justify">
+
+<p><strong><span style="color:#82243a">Exemplo 1</span></strong> <span class="citation" data-cites="maronna:martin:yohai:2006">(<a href="#/referências" role="doc-biblioref" onclick="">Maronna et al. 2006,p. 2</a>)</span> Considere as seguintes 24 determinações do teor de cobre em farinha integral (em partes por milhão), classificadas em ordem crescente:</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="box">
+<p><font size="5"><strong>Dados:</strong> 2.20, 2.20, 2.40, 2.40, 2.50, 2.70, 2.80, 2.90, 3.03, 3.03, 3.10, 3.37, 3.40, 3.40, 3.40, 3.50, 3.60, 3.70, 3.70, 3.70, 3.70, 3.77, 5.28, <span style="color:red">28.95</span></font></p>
+</div>
+<p><br></p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Resumo Estatístico: 
+
+count    24.000000
+mean      4.280417
+std       5.297396
+min       2.200000
+25%       2.775000
+50%       3.385000
+75%       3.700000
+max      28.950000
+dtype: float64</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="fragment" data-fragment-index="1">
+<div class="box">
+<p><font size="5"><strong>Dados:</strong> 2.20, 2.20, 2.40, 2.40, 2.50, 2.70, 2.80, 2.90, 3.03, 3.03, 3.10, 3.37, 3.40, 3.40, 3.40, 3.50, 3.60, 3.70, 3.70, 3.70, 3.70, 3.77, 5.28, <span class="fragment highlight-red strike" data-fragment-index="1">28.95</span> </font></p>
+</div>
+<p><br></p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Resumo Estatístico: 
+
+count    23.000000
+mean      3.207826
+std       0.687108
+min       2.200000
+25%       2.750000
+50%       3.370000
+75%       3.650000
+max       5.280000
+dtype: float64</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Fim Columnas -->
+<div class="fragment" data-fragment-index="2">
+<p><span style="color:#82243a"><font size="5"><b>Quando uma observação é considerada “suficientemente discrepante” para ser desconsiderada do conjunto?</b></font></span></p>
+</div>
+</div></section>
+<section id="mediana" class="slide level2">
+<h2>Mediana</h2>
+<div style="text-align: justify">
+<p>Em termos da função de distribuição acumulada <span class="math inline">\(F_X\)</span>, a <strong>mediana</strong> define-se como o número real <span class="math inline">\(m\)</span> que satisfaz <span class="math display">\[\mathbb{P}(X\le m)\ge\frac12 \quad \text{ e } \quad \mathbb{P}(X\ge m)\le\frac12.\]</span></p>
+<blockquote>
+<p>No caso em que a variável aleatória é absolutamente contínua, a <strong>mediana</strong> satisfaz <span class="math display">\[\mathbb{P}(X\le m)=\int_{-\infty}^mf(x)\,dx=\frac12=\int_m^{\infty}f(x)\,dx=\mathbb{P}(X\ge m).\]</span></p>
+</blockquote>
+</div></section>
+<section id="mediana-amostral" class="slide level2">
+<h2>Mediana amostral</h2>
+<div style="text-align: justify">
+
+<div id="def-definicao1" class="theorem definition">
+<p><span class="theorem-title"><strong>Definição 1 (Estatísticas de ordem) </strong></span>Seja <span class="math inline">\(X_1, X_2, \dots, X_n\)</span> uma amostra aleatória de uma população com função de distribuição acumulada <span class="math inline">\(F_X\)</span>. Então, <span class="math inline">\(Y_{1:n}, Y_{2:n}, \ldots, Y_{n:n}\)</span> representam as variáveis ordenadas na ordem crescente, i.e. <span class="math display">\[Y_{1:n}\le Y_{2:n}\le \cdots\le Y_{n:n}, \quad (\text{com prob. 1}).\]</span> As variáveis <span class="math inline">\(Y_{1:n}, Y_{2:n}, \ldots, Y_{n:n}\)</span> são chamadas de <strong>estatísticas de ordem</strong> da amostra.<sup>1</sup></p>
+</div>
+<div class="callout callout-note callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Notação</strong></p>
+</div>
+<div class="callout-content">
+<p>Outra notação muito comum encontrada na literatura é <span class="math inline">\(Y_{(1)}, Y_{(2)}, \ldots, Y_{(n)}\)</span> ou simplesmente <span class="math inline">\(Y_{1}, Y_{2}, \ldots, Y_{n}\)</span>, onde <span class="math inline">\(Y_{1}=\min\{X_1, X_2, \dots, X_n\}\)</span> e <span class="math inline">\(Y_{n}=\max\{X_1, X_2, \dots, X_n\}\)</span>.</p>
+</div>
+</div>
+</div>
+<p><br></p>
+<hr>
+</div><aside><ol class="aside-footnotes"><li id="fn2"><p>Para detalhes, vide <span class="citation" data-cites="mood:graybill:boes:1974">Mood et al. (<a href="#/referências" role="doc-biblioref" onclick="">1974</a>)</span> e <span class="citation" data-cites="hogg:mckean:craig:2004">Hogg et al. (<a href="#/referências" role="doc-biblioref" onclick="">2004</a>)</span>.</p></li></ol></aside></section>
+<section id="mediana-amostral-1" class="slide level2">
+<h2>Mediana amostral</h2>
+<div style="text-align: justify">
+
+<p>Dessa forma, se <span class="math inline">\(Y_{1}, Y_{2}, \ldots, Y_{n}\)</span> representam as estatísticas de ordem de uma amostra aleatória <span class="math inline">\(X_1, X_2, \dots, X_n\)</span>, então a <strong>mediana</strong> é calculada como:</p>
+<ul>
+<li>Para <span class="math inline">\(n\)</span> ímpar, i.e., <span class="math inline">\(n=2m-1\)</span> para algum inteiro <span class="math inline">\(m\)</span>, então a mediana é dada por <span class="math display">\[Med(X) = Y_{m};\]</span></li>
+<li>Para <span class="math inline">\(n\)</span> par, i.e., <span class="math inline">\(n=2m\)</span> para algum inteiro <span class="math inline">\(m\)</span>, então a mediana é dada por <span class="math display">\[Med(X) = \frac{Y_{m}+Y_{m+1}}{2}.\]</span></li>
+</ul>
+<div class="callout callout-caution callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Atenção</strong></p>
+</div>
+<div class="callout-content">
+<p>Em alguns casos pode ser mais conveniente escolher <span class="math inline">\(Y_{m}\)</span> ou <span class="math inline">\(Y_{m+1}\)</span> (<em>mediana inferior</em> e <em>superior</em>, respectivamente).</p>
+</div>
+</div>
+</div>
+</div></section>
+<section id="mediana-1" class="slide level2">
+<h2>Mediana</h2>
+<div style="text-align: justify">
+
+<h4 id="algumas-considerações">Algumas considerações</h4>
+<div class="fragment semi-fade-out" data-fragment-index="1">
+<p>As medianas existem mesmo para algumas distribuições que não possuem uma média bem definida, como a distribuição de Cauchy. Nesse caso, a mediana de uma distribuição de Cauchy com parâmetro de locação <span class="math inline">\(\alpha\)</span> é igual ao parâmetro de locação;</p>
+</div>
+<div class="fragment fade-in" data-fragment-index="1">
+<div class="fragment semi-fade-out" data-fragment-index="2">
+<p>A mediana de uma distribuição unimodal simétrica com média <span class="math inline">\(\mu\)</span>, também assume o valor <span class="math inline">\(\mu\)</span> e coincide com a moda. Por exemplo: A mediana de uma distribuição <span class="math inline">\(U[a, b]\)</span> é <span class="math inline">\(\frac{a + b}{2}\)</span>, que também é a média;</p>
+</div>
+</div>
+<div class="fragment fade-in" data-fragment-index="2">
+<p>A distribuição da mediana amostral de uma população com função de densidade <span class="math inline">\(f(x;\mu,\sigma^2)\)</span> é assintoticamente normal com média <span class="math inline">\(\mu\)</span> e variância <span class="math inline">\(\frac{1}{4n[f(m)]^2}\)</span>, onde <span class="math inline">\(m\)</span> é a mediana de <span class="math inline">\(f(x)\)</span> e <span class="math inline">\(n\)</span> é o tamanho de amostra. Se a densidade é normal com média <span class="math inline">\(\mu\)</span> e variância <span class="math inline">\(\sigma^2\)</span>, então a variância assintótica é dada por <span class="math inline">\(\frac{\pi}{2}\frac{\sigma^2}{n}\)</span>.</p>
+</div>
+</div></section>
+<section id="desvio-absoluto-mediano" class="slide level2">
+<h2>Desvio absoluto mediano</h2>
+<div style="text-align: justify">
+
+<p>Sendo <span class="math inline">\(X_1,X_2,\ldots,X_n\)</span> uma amostra aleatória, uma alternativa robusta para o desvio padrão é dada pelo <em>desvio absoluto mediano</em> (MAD), definido como <span class="math display">\[MAD(X_1,X_2,\ldots,X_n)=MAD(\mathbf{X})=Med\left\{\left|\mathbf{X}-Med(\mathbf{X})\right|\right\}.\]</span></p>
+<p>Para usar o MAD como um estimador consistente para o desvio, considera-se: <span class="math display">\[MADN(\mathbf{X})=\frac{Med\left\{\left|\mathbf{X}-Med(\mathbf{X})\right|\right\}}{0.67449}=\frac{MAD(\mathbf{X})}{0.67449},\]</span> onde o valor <span class="math inline">\(0.67449\)</span> representa o MAD de uma variável aleatória com distribuição normal padrão.</p>
+</div></section>
+<section id="desvio-absoluto-mediano-1" class="slide level2">
+<h2>Desvio absoluto mediano</h2>
+<div style="text-align: justify">
+
+<p>Para calcular o valor do fator de consistência, considere</p>
+<div class="math">
+<p><span class="math display">\[\begin{align*}
+    \frac12 &amp;= \mathbb{P}\left(|X-\mu| \le MAD\right) = \mathbb{P}\left(\left|\frac{X - \mu}{\sigma}\right| \le \frac {MAD} \sigma\right) = \mathbb{P}\left(|Z| \le \frac{MAD}{\sigma}\right)\\
+    &amp;=\mathbb{P}\left(Z \le \frac{MAD}{\sigma}\right)-\mathbb{P}\left(Z \le -\frac{MAD}{\sigma}\right)=\Phi\left(\frac{MAD}{\sigma}\right)-\Phi\left(-\frac{MAD}{\sigma}\right),
+  \end{align*}\]</span></p>
+</div>
+<p>onde <span class="math inline">\(\Phi\left(-\frac{MAD}{\sigma}\right)=1-\Phi\left(\frac{MAD}{\sigma}\right)\)</span>. Dessa forma, temos que</p>
+<div class="math">
+<p><span class="math display">\[\begin{align*}
+    \Phi\left(\frac{MAD}{\sigma}\right)-\Phi\left(-\frac{MAD}{\sigma}\right)&amp;=
+    2\Phi\left(\frac{MAD}{\sigma}\right)-1=\frac12.
+  \end{align*}\]</span></p>
+</div>
+<p>Daí, <span class="math inline">\(\Phi\left(\frac{MAD}{\sigma}\right)=\frac34\)</span> ou <span class="math inline">\(\frac{MAD}{\sigma}=\Phi^{-1}\left(\frac34\right)=0.6744898\quad\blacksquare\)</span></p>
+</div></section>
+<section id="desvio-absoluto-mediano-2" class="slide level2">
+<h2>Desvio absoluto mediano</h2>
+<div style="text-align: justify">
+
+<h4 id="algumas-considerações-1">Algumas considerações</h4>
+<div class="fragment semi-fade-out" data-fragment-index="1">
+<p>O MAD populacional define-se analogamente ao MAD amostral, mas no caso populacional, o MAD é definido com base na função de distribuição. Para uma distribuição simétrica com média zero, o MAD populacional é equivalente ao quantil <span class="math inline">\(75\)</span> da distribuição;</p>
+</div>
+<div class="fragment fade-in" data-fragment-index="1">
+<p>Ao contrário da variância, que pode ser infinita ou indefinida, o MAD populacional é sempre um número finito. Por exemplo, para uma distribuição Cauchy padrão o MAD é 1.</p>
+</div>
+</div></section>
+<section id="locação-e-escala" class="slide level2 center" data-background-color="#172a46">
+<h2>Locação e Escala</h2>
+<div class="cell">
+<style type="text/css">
+.center h2 {
+  text-align: center !important
+}
+</style>
+</div>
+</section>
+<section id="locação" class="slide level2">
+<h2>Locação</h2>
+<div style="text-align: justify">
+
+<div id="def-definicao2" class="theorem definition">
+<p><span class="theorem-title"><strong>Definição 2 (Parâmetros de locação) </strong></span>Seja <span class="math inline">\(X\)</span> uma variável aleatória cuja função de distribuição <span class="math inline">\(F(x)\)</span> é da forma <span class="math inline">\(F(x)=G(x−\theta)\)</span>, onde <span class="math inline">\(\theta\)</span> é o parâmetro da distribuição. Neste caso, dizemos que <span class="math inline">\(\theta\)</span> é um parâmetro de <strong>locação</strong>.</p>
+</div>
+<p><br></p>
+<div id="exm-exemplo2" class="theorem example">
+<p><span class="theorem-title"><strong>Exemplo 2 </strong></span>Seja <span class="math inline">\(X\)</span> uma variável aleatória de uma população com distribuição <span class="math inline">\(N(\theta, 1)\)</span>. A função de distribuição de <span class="math inline">\(X\)</span> é dada por <span class="math inline">\(F (x) = \Phi(x − \theta)\)</span>.</p>
+</div>
+<p><br></p>
+<div id="exm-exemplo3" class="theorem example">
+<p><span class="theorem-title"><strong>Exemplo 3 </strong></span>Seja <span class="math inline">\(X\)</span> uma variável aleatória de uma população com distribuição <span class="math inline">\(Cauchy(\theta)\)</span>. A função de densidade de <span class="math inline">\(X\)</span> é dada por <span class="math inline">\(f(x;\theta) = \frac{1}{\pi\left(1+(x-\theta)^2\right)}\mathbb{I}_\mathbb{R}(x)\)</span>. Daí, a função de distribuição acumulada é dada por <span class="math display">\[F(x)=\frac\pi2+\arctan(x-\theta).\]</span></p>
+</div>
+</div></section>
+<section id="locação-1" class="slide level2">
+<h2>Locação</h2>
+<div style="text-align: justify">
+
+<div id="def-definicao3" class="theorem definition">
+<p><span class="theorem-title"><strong>Definição 3 (Invariância por locação) </strong></span>Seja <span class="math inline">\(X_1,X_2,\ldots,X_n\)</span> uma amostra aleatória de uma população com distribuição <span class="math inline">\(F\)</span>. Dizemos que a estatística <span class="math inline">\(T=t(X_1,X_2,\ldots,X_n)\)</span> é <strong>invariante por locação</strong> quando <span class="math display">\[t(X_1+c,X_2+c,\ldots,X_n+c)=t(X_1,X_2,\ldots,X_n),\]</span> para todo <span class="math inline">\(c\in\mathbb{R}\)</span>.</p>
+</div>
+<div id="exm-exemplo4" class="theorem example">
+<p><span class="theorem-title"><strong>Exemplo 4 </strong></span>Considere a estatística <span class="math inline">\(T=\frac{1}{n-1}\sum_{i=1}^n(X_i-\bar{X})^2\)</span>. Sabendo que <span class="math inline">\(\frac1n\sum_{i=1}^n(X_i+c)=\frac1n\sum_{i=1}^nX_i+c\)</span>, então <span class="math inline">\(\frac{1}{n-1}\sum_{i=1}^n(X_i+c-(\bar{X}+c)^2=T\)</span>.</p>
+</div>
+<div id="exm-exemplo5" class="theorem example">
+<p><span class="theorem-title"><strong>Exemplo 5 </strong></span>Considere <span class="math inline">\(T = \max\{X_1, X_2, \ldots, X_n\} - \min\{X_1, X_2, \ldots, X_n\}\)</span>, então</p>
+<div class="math">
+<p><span class="math display">\[\begin{align*}
+    \max\{X_1+c,&amp; X_2+c, \ldots, X_n+c\} - \min\{X_1+c, X_2+c, \ldots, X_n+c\}\\
+    &amp;=\max\{X_1, X_2, \ldots, X_n\} - \min\{X_1, X_2, \ldots, X_n\}
+  \end{align*}\]</span></p>
+</div>
+</div>
+</div></section>
+<section id="escala" class="slide level2">
+<h2>Escala</h2>
+<div style="text-align: justify">
+
+<div id="def-definicao4" class="theorem definition">
+<p><span class="theorem-title"><strong>Definição 4 (Parâmetros de escala) </strong></span>Seja <span class="math inline">\(X\)</span> uma variável aleatória cuja função de distribuição <span class="math inline">\(F(x)\)</span> é da forma <span class="math inline">\(F(x)=G\left(\frac{x}{\theta}\right)\)</span>, onde <span class="math inline">\(\theta&gt;0\)</span>. Neste caso, dizemos que <span class="math inline">\(\theta\)</span> é um parâmetro de <strong>escala</strong>.</p>
+</div>
+<div class="callout callout-caution callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Atenção</strong></p>
+</div>
+<div class="callout-content">
+<p>Para uma variável aleatória <span class="math inline">\(X\)</span> contínua, a função de densidade é dada por <span class="math inline">\(f(x;\theta)=\frac1\theta g\left(\frac{x}{\theta}\right)\)</span>, onde <span class="math inline">\(g\)</span> representa a derivada de <span class="math inline">\(G\)</span>.</p>
+</div>
+</div>
+</div>
+<div id="exm-exemplo6" class="theorem example">
+<p><span class="theorem-title"><strong>Exemplo 6 </strong></span>Seja <span class="math inline">\(X\)</span> uma variável aleatória de uma população com densidade <span class="math display">\[f(x;\lambda)=\frac1\lambda\exp\left\{\frac{x}{\lambda}\right\}\mathbb{I}_{(0,\infty)}(x).\]</span></p>
+</div>
+</div></section>
+<section id="escala-1" class="slide level2">
+<h2>Escala</h2>
+<div style="text-align: justify">
+
+<div id="def-definicao5" class="theorem definition">
+<p><span class="theorem-title"><strong>Definição 5 (Invariância por escala) </strong></span>Seja <span class="math inline">\(X_1,X_2,\ldots,X_n\)</span> uma amostra aleatória de uma população com distribuição <span class="math inline">\(F\)</span>. Dizemos que a estatística <span class="math inline">\(T=t(X_1,X_2,\ldots,X_n)\)</span> é <strong>invariante por escala</strong> quando <span class="math display">\[t(cX_1, cX_2,\ldots,cX_n)=t(X_1,X_2,\ldots,X_n),\]</span> para todo <span class="math inline">\(c\in\mathbb{R}\)</span>.</p>
+</div>
+<div id="exm-exemplo7" class="theorem example">
+<p><span class="theorem-title"><strong>Exemplo 7 </strong></span>Considere <span class="math inline">\(T = \frac{\max\{X_1, X_2, \ldots, X_n\}}{\min\{X_1, X_2, \ldots, X_n\}}= \frac{\max\{cX_1, cX_2, \ldots, cX_n\}}{\min\{cX_1, cX_2, \ldots, cX_n\}}.\)</span></p>
+</div>
+<p><br></p>
+<div id="exm-exemplo8" class="theorem example">
+<p><span class="theorem-title"><strong>Exemplo 8 </strong></span>Seja <span class="math inline">\(X_1, X_2,\ldots, X_n\)</span> uma amostra aleatória de uma população com distribuição <span class="math inline">\(N(0,\theta)\)</span>. A estatística <span class="math inline">\(T =\frac{\sqrt{n}\bar{X}}{\sqrt{\frac{1}{n-1}\sum_{i=1}^n(X_i-\bar{X})^2}}\)</span> é invariante por escala.</p>
+</div>
+</div></section>
+<section id="m-estimadores-de-locação" class="slide level2 center" data-background-color="#172a46">
+<h2>M-estimadores de locação</h2>
+</section>
+<section id="generalizando-a-máxima-verossimilhança" class="slide level2">
+<h2>Generalizando a máxima verossimilhança</h2>
+<div style="text-align: justify">
+
+<p>Seja <span class="math inline">\(X_1, X_2, \dots, X_n\)</span> uma amostra aleatória de uma população com uma distribuição que envolve um parâmetro <span class="math inline">\(\theta\)</span>. A função de verossimilhança define-se como a função de densidade conjunta <span class="math display">\[L(\theta)=f(x_1,x_2,\ldots,x_n;\theta)=\prod_{i=1}^nf(x_i;\theta).\]</span> A estimativa de máxima verossimilhança é o valor de <span class="math inline">\(\theta\)</span> tal que <span class="math display">\[\hat{\theta}=t(x_1,x_2,\ldots,x_n)=\underset{\theta\in\Theta}{\arg\max}\, L(\theta).\]</span> Dessa forma, o estimador de máxima verossimilhança de <span class="math inline">\(\theta\)</span> é dado por <span class="math inline">\(\hat{\theta}=t(X_1,X_2,\ldots,X_n)\)</span>.</p>
+</div></section>
+<section id="generalizando-a-máxima-verossimilhança-1" class="slide level2">
+<h2>Generalizando a máxima verossimilhança</h2>
+<div style="text-align: justify">
+
+<p>Suponha uma amostra aleatória <span class="math inline">\(X_1, X_2, \dots, X_n\)</span> de uma população com densidade <span class="math inline">\(f(x;\mu)\)</span>, onde <span class="math inline">\(\mu\)</span> é um parâmetro de locação, então o estimador de máxima verossimilhança de <span class="math inline">\(\mu\)</span> é dado por <span class="math inline">\(\hat{\mu}=t(X_1,X_2,\ldots,X_n)\)</span>.</p>
+<p><br></p>
+<p>Supondo que a densidade uma função positiva em todo seu domínio, então podemos encontrar a estimativa de máxima verossimilhança como</p>
+<div class="math">
+<p><span class="math display">\[\begin{align*}
+    \hat{\mu}&amp;=\underset{\mu\in\Theta}{\arg\max}\, L(\mu)=\underset{\mu\in\Theta}{\arg\max}\, \prod_{i=1}^nf(x_i;\mu)\\
+    &amp;=\underset{\mu\in\Theta}{\arg\min}\, \sum_{i=1}^n\rho(x_i;\mu),
+  \end{align*}\]</span></p>
+</div>
+<p>onde <span class="math inline">\(\rho(x_i;\mu)=-\log f(x_i;\mu)\)</span>.</p>
+</div></section>
+<section id="generalizando-a-máxima-verossimilhança-2" class="slide level2">
+<h2>Generalizando a máxima verossimilhança</h2>
+<div style="text-align: justify">
+
+<p>Por exemplo, se a amostra aleatória é de uma população com densidade normal com parâmetro de locação <span class="math inline">\(\mu\)</span> e parâmetro de escala <span class="math inline">\(1\)</span>, i.e.&nbsp; <span class="math display">\[f(x;\mu,1)=\frac{1}{\sqrt{2\pi}}\exp\left\{-\frac12(x-\mu)^2\right\},\]</span> então</p>
+<div class="math">
+<p><span class="math display">\[\begin{align*}
+    \hat{\mu}&amp;=\underset{\mu\in\Theta}{\arg\min}\, \sum_{i=1}^n\rho(x_i;\mu),
+  \end{align*}\]</span></p>
+</div>
+<p>onde <span class="math inline">\(\rho(x_i;\mu)=\frac{(x_i-\mu)^2}{2}\)</span>. Dessa forma, o estimador de máxima verossimilhança é dado por <span class="math inline">\(\hat{\mu}=\bar{X}_n\)</span>.</p>
+</div></section>
+<section id="generalizando-a-máxima-verossimilhança-3" class="slide level2">
+<h2>Generalizando a máxima verossimilhança</h2>
+<div style="text-align: justify">
+
+<p>Por outro lado, se a amostra aleatória é de uma população com densidade de Laplace com parâmetro de locação <span class="math inline">\(\mu\)</span> e parâmetro de escala <span class="math inline">\(1\)</span>, i.e., <span class="math display">\[f(x;\mu,1)=\frac{1}{2}\exp\left\{-|x-\mu|\right\}\]</span></p>
+<p>então</p>
+<div class="math">
+<p><span class="math display">\[\begin{align*}
+    \hat{\mu}&amp;=\underset{\mu\in\Theta}{\arg\min}\, \sum_{i=1}^n\rho(x_i;\mu),
+  \end{align*}\]</span></p>
+</div>
+<p>onde <span class="math inline">\(\rho(x_i;\mu)=|x_i-\mu|\)</span>. Dessa forma, o estimador de máxima verossimilhança é dado por <span class="math inline">\(\hat{\mu}=Med({X})\)</span>.</p>
+</div></section>
+<section id="generalizando-a-máxima-verossimilhança-4" class="slide level2">
+<h2>Generalizando a máxima verossimilhança</h2>
+<div style="text-align: justify">
+
+<p>Observe que, a derivada de <span class="math inline">\(\rho(x)=|x|\)</span> existe para todo <span class="math inline">\(x\ne0\)</span> e a mesma é dada por</p>
+<div class="math">
+<p><span class="math display">\[\begin{align*}
+    \mathrm{sgn}(x)&amp;=
+    \begin{cases}
+    -1, &amp; \text{ se } x&lt;0;\\
+     0, &amp; \text{ se } x=0;\\
+     1, &amp; \text{ se } x&gt;0.
+    \end{cases}
+  \end{align*}\]</span></p>
+</div>
+<p>Como a função <span class="math inline">\(\rho(x)=|x|\)</span> é contínua, então basta encontrar os valores de <span class="math inline">\(\mu\)</span> onde a sua derivada muda de sinal. Dessa forma, observe que <span class="math display">\[\mathrm{sgn}(x)=\mathbb{I}_{(0,\infty)}(x)-\mathbb{I}_{(-\infty,0)}(x).\]</span> Daí, <span class="math inline">\(\sum_{i=1}^n\mathrm{sgn}(x_i-\mu)=\sum_{i=1}^n\mathbb{I}_{(0,\infty)}(x_i-\mu)-\sum_{i=1}^n\mathbb{I}_{(-\infty,0)}(x_i-\mu)=0\)</span>, o que implica que <span class="math inline">\(\mu\)</span> é qualquer mediana de amostral.</p>
+</div></section>
+<section id="generalizando-a-máxima-verossimilhança-5" class="slide level2">
+<h2>Generalizando a máxima verossimilhança</h2>
+<div style="text-align: justify">
+
+<p>Em 1964, Peter J. Huber propôs generalizar a estimativa de máxima verossimilhança considerando <span class="math display">\[\hat{\mu}=\underset{\mu\in\Theta}{\arg\min}\, \sum_{i=1}^n\rho(x_i;\mu),\]</span> onde <span class="math inline">\(\rho(\cdot)\)</span> é uma função com certas propriedades. Os estimadores que satisfazem essas condições são chamados de <strong>M-estimadores</strong>.<sup>1</sup></p>
+</div><aside><ol class="aside-footnotes"><li id="fn3"><p>Para detalhes, vide <span class="citation" data-cites="maronna:martin:yohai:2006">Maronna et al. (<a href="#/referências" role="doc-biblioref" onclick="">2006</a>)</span>, <span class="citation" data-cites="huber:2004">Huber (<a href="#/referências" role="doc-biblioref" onclick="">2004</a>)</span>.</p></li></ol></aside></section>
+<section id="generalizando-a-máxima-verossimilhança-6" class="slide level2">
+<h2>Generalizando a máxima verossimilhança</h2>
+<div style="text-align: justify">
+
+<p>Algumas alternativas para <span class="math inline">\(\rho(\cdot)\)</span> são as seguintes:</p>
+<ul>
+<li>Função de Huber:</li>
+</ul>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="column quarto-layout-cell" style="flex-basis: 5.7%;justify-content: center;">
+<div class="math">
+<p><span class="math display">\[\begin{align*}
+    \rho(x)=
+    \begin{cases}
+    \frac{x^2}{2}, &amp; \text{ se } |x|\le b;\\
+     b|x|-\frac{b^2}{2}, &amp; \text{ se } |x|&gt;b.
+    \end{cases}
+  \end{align*}\]</span></p>
+</div>
+<p><br> <br></p>
+<div class="math">
+<p><span class="math display">\[\begin{align*}
+    \psi(x)=
+    \begin{cases}
+    -b, &amp; \text{ se } x&lt;b;\\
+     x, &amp; \text{ se } |x|\le b;\\
+     b, &amp; \text{ se } x&gt;b.
+    \end{cases}
+  \end{align*}\]</span></p>
+</div>
+</div>
+<div class="column quarto-layout-cell" style="flex-basis: 94.3%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/huber.png" width="500"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/huber2.png" width="500"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div></section>
+<section id="generalizando-a-máxima-verossimilhança-7" class="slide level2">
+<h2>Generalizando a máxima verossimilhança</h2>
+<div style="text-align: justify">
+
+<ul>
+<li>Função biponderada de Tukey:</li>
+</ul>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="column quarto-layout-cell" style="flex-basis: 5.7%;justify-content: center;">
+<div class="math">
+<p><span class="math display">\[\begin{align*}
+    \rho(x)=
+    \begin{cases}
+    \frac{x^6}{6}-\frac{r^2x^4}{2}+\frac{r^4x^2}{2}, &amp; \text{ se } |x|\le r;\\
+     b|x|-\frac{r^6}{6}, &amp; \text{ se } |x|&gt;r.
+    \end{cases}
+  \end{align*}\]</span></p>
+</div>
+<p><br> <br></p>
+<div class="math">
+<p><span class="math display">\[\begin{align*}
+    \psi(x)=
+    \begin{cases}
+    x(r^2-x^2)^2, &amp; \text{ se } |x|\le r;\\
+    0, &amp; \text{ se } |x|&gt;r.
+    \end{cases}
+  \end{align*}\]</span></p>
+</div>
+</div>
+<div class="column quarto-layout-cell" style="flex-basis: 94.3%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/tukey.png" width="500"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/tukey2.png" width="500"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div></section>
+<section id="generalizando-a-máxima-verossimilhança-8" class="slide level2">
+<h2>Generalizando a máxima verossimilhança</h2>
+<div style="text-align: justify">
+
+<ul>
+<li>Função de Hampel:</li>
+</ul>
+<div class="math">
+<p><span class="math display">\[\begin{align*}
+    \rho(x)=
+    \begin{cases}
+    \rho(-x), &amp; \text{ se } x&lt;0;\\
+    \frac{x^2}{2}, &amp; \text{ se } 0\le x&lt;a;\\
+     ax-\frac{a^2}{2}, &amp; \text{ se } a\le x&lt;b;\\
+     ab-\frac{a^2}{2}+\frac{ac(x-b)}{c-b}-\frac{x^2-b^2}{2(c-b)}, &amp; \text{ se } b\le x&lt;c;\\
+     ab+ac-\frac{a^2}{2}-\frac{c}{2}-\frac{b}{2}, &amp; \text{ se } x\ge c.
+    \end{cases}
+  \end{align*}\]</span></p>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/hampel.png" width="600"></p>
+</figure>
+</div>
+</div></section>
+<section id="generalizando-a-máxima-verossimilhança-9" class="slide level2">
+<h2>Generalizando a máxima verossimilhança</h2>
+<div style="text-align: justify">
+
+<ul>
+<li>Função de Hampel:</li>
+</ul>
+<div class="math">
+<p><span class="math display">\[\begin{align*}
+    \psi(x)=
+    \begin{cases}
+    -\psi(-x), &amp; \text{ se } x&lt;0;\\
+     x, &amp; \text{ se } 0\le x&lt;a;\\
+     a, &amp; \text{ se } a\le x&lt;b;\\
+     \frac{c-x}{c-b}a, &amp; \text{ se } b\le x&lt;c;\\
+     0, &amp; \text{ se } x\ge c.
+    \end{cases}
+  \end{align*}\]</span></p>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/hampel2.png" width="700"></p>
+</figure>
+</div>
+</div></section>
+<section id="generalizando-a-máxima-verossimilhança-10" class="slide level2">
+<h2>Generalizando a máxima verossimilhança</h2>
+<div style="text-align: justify">
+
+<ul>
+<li>Função de Andrews:</li>
+</ul>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="column quarto-layout-cell" style="flex-basis: 5.7%;justify-content: center;">
+<div class="math">
+<p><span class="math display">\[\begin{align*}
+    \rho(x)=
+    \begin{cases}
+    a-a\cos(x/a), &amp; \text{ se } |x|\le a\pi;\\
+    2a, &amp; \text{ se } |x|&gt;a\pi.
+    \end{cases}
+  \end{align*}\]</span></p>
+</div>
+<p><br> <br></p>
+<div class="math">
+<p><span class="math display">\[\begin{align*}
+    \psi(x)=
+    \begin{cases}
+    \sin(x/a), &amp; \text{ se } |x|\le a\pi;\\
+    0, &amp; \text{ se } |x|&gt;a\pi.
+    \end{cases}
+  \end{align*}\]</span></p>
+</div>
+</div>
+<div class="column quarto-layout-cell" style="flex-basis: 94.3%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/andrews.png" width="500"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/andrews2.png" width="500"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div></section>
+<section id="propriedades-dos-m-estimadores" class="slide level2 center" data-background-color="#172a46">
+<h2>Propriedades dos M-estimadores</h2>
+</section>
+<section id="distribuição-dos-m-estimadores" class="slide level2">
+<h2>Distribuição dos M-estimadores</h2>
+<div style="text-align: justify">
+
+<p>Em geral, não existem expressões explícitas para a distribuição dos M-estimadores para tamanhos de amostra finitos, mas é possível estudar aproximações assintóticas que permitam verificar suas suas propriedades probabilísticas.</p>
+<p>Sabemos que, <span class="math display">\[\hat{\mu}=\underset{\mu\in\Theta}{\arg\min}\, \sum_{i=1}^n\rho(x_i-\mu),\]</span> Se <span class="math inline">\(\rho\)</span> é diferenciável, i.e., <span class="math inline">\(\psi=\rho'\)</span> existe, então <span class="math display">\[\sum_{i=1}^n\psi(x_i-\hat{\mu})=0\]</span></p>
+</div></section>
+<section id="distribuição-dos-m-estimadores-1" class="slide level2">
+<h2>Distribuição dos M-estimadores</h2>
+<div style="text-align: justify">
+
+<p>Assumindo que <span class="math inline">\(\psi\)</span> é uma função crescente, então <span class="math display">\[\mathbb{E}_F\psi(X-\mu_0)=0,\]</span> onde <span class="math inline">\(F\)</span> representa a função de distribuição.</p>
+<p>Para a média <span class="math inline">\(\psi(x)=x\)</span>, então <span class="math inline">\(\mu_0=\mathbb{E}X\)</span>. Para a mediana, sabemos que <span class="math inline">\(\mathrm{sgn}(x)=\mathbb{I}_{(0,\infty)}(x)-\mathbb{I}_{(-\infty,0)}(x)\)</span>, então <span class="math display">\[\mathbb{P}[X&gt;\mu_0]-\mathbb{P}[X&lt;\mu_0]=1-2F(\mu_0)=0.\]</span> Dessa forma, <span class="math inline">\(F(\mu_0)=\frac12\)</span>, que corresponde à <span class="math inline">\(\mu_0=\mathrm{Med}(X)\)</span>.</p>
+</div></section>
+<section id="distribuição-dos-m-estimadores-2" class="slide level2">
+<h2>Distribuição dos M-estimadores</h2>
+<div style="text-align: justify">
+
+<p><span class="math inline">\(\hat{\mu}\)</span> é assintoticamente normal com média <span class="math inline">\(\mu_0\)</span> e variância <span class="math inline">\(\frac{\nu}{n}\)</span>, onde <span class="math display">\[\nu=\frac{\mathbb{E}_F\psi(X-\mu_0)^2}{\left[\mathbb{E}_F\psi'(X-\mu_0)\right]^2}.\]</span> Se a distribuição é invariante por locação, então <span class="math display">\[\nu=\frac{\mathbb{E}_F\psi(X)^2}{\left[\mathbb{E}_F\psi'(X)\right]^2}.\]</span></p>
+</div></section>
+<section id="distribuição-dos-m-estimadores-3" class="slide level2">
+<h2>Distribuição dos M-estimadores</h2>
+<div style="text-align: justify">
+
+<div id="exm-exemplo9" class="theorem example">
+<p><span class="theorem-title"><strong>Exemplo 9 </strong></span>Considere a função de Huber dada por</p>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="column quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="math">
+<p><span class="math display">\[\begin{align*}
+    \rho_k(x)=
+    \begin{cases}
+    x^2, &amp; \text{ se } |x|\le k;\\
+     2k|x|-\frac{k^2}{2}, &amp; \text{ se } |x|&gt;k;
+    \end{cases}
+  \end{align*}\]</span></p>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/huber3.png" width="700"></p>
+</figure>
+</div>
+</div>
+<div class="column quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="math">
+<p><span class="math display">\[\begin{align*}
+    \psi_k(x)=
+    \begin{cases}
+     2x, &amp; \text{ se } |x|\le k;\\
+     2k\,\mathrm{sgn}(x), &amp; \text{ se } |x|&gt;k.
+    \end{cases}
+  \end{align*}\]</span></p>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/huber4.png" width="700"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></section>
+<section id="distribuição-dos-m-estimadores-4" class="slide level2">
+<h2>Distribuição dos M-estimadores</h2>
+<div style="text-align: justify">
+
+<p>Suponha que <span class="math inline">\(F=(1-\varepsilon)G+\varepsilon H\)</span>, onde <span class="math inline">\(G=N(0,1)\)</span> e <span class="math inline">\(H=N(0,10)\)</span>, então a variância assintótica é dada por</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><span class="math inline">\(k\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\varepsilon=0\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\varepsilon=0.05\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\varepsilon=0.10\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0.0</td>
+<td style="text-align: right;">1.571</td>
+<td style="text-align: right;">1.722</td>
+<td style="text-align: right;">1.897</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.7</td>
+<td style="text-align: right;">1.187</td>
+<td style="text-align: right;">1.332</td>
+<td style="text-align: right;">1.501</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1.0</td>
+<td style="text-align: right;">1.107</td>
+<td style="text-align: right;">1.263</td>
+<td style="text-align: right;">1.443</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1.4</td>
+<td style="text-align: right;">1.047</td>
+<td style="text-align: right;">1.227</td>
+<td style="text-align: right;">1.439</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1.7</td>
+<td style="text-align: right;">1.023</td>
+<td style="text-align: right;">1.233</td>
+<td style="text-align: right;">1.479</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2.0</td>
+<td style="text-align: right;">1.010</td>
+<td style="text-align: right;">1.259</td>
+<td style="text-align: right;">1.550</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\infty\)</span></td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">5.950</td>
+<td style="text-align: right;">10.900</td>
+</tr>
+</tbody>
+</table>
+</div></section>
+<section id="distribuição-dos-m-estimadores-5" class="slide level2">
+<h2>Distribuição dos M-estimadores</h2>
+<div style="text-align: justify">
+
+<div id="exm-exemplo10" class="theorem example">
+<p><span class="theorem-title"><strong>Exemplo 10 (L-estimadores) </strong></span>Uma classe de estimadores definidos como a combinação linear de estatísticas de ordem é chamada de <strong>L-estimadores</strong> e são definidos como: <span class="math display">\[\hat{\mu}=\sum_{i=1}^na_iY_i,\]</span> onde <span class="math inline">\(Y_i\)</span> representa a <span class="math inline">\(i\)</span>-ésima estatística de ordem da amostra aleatória e <span class="math inline">\(a_i\)</span>, com <span class="math inline">\(i=1,2,\ldots,n\)</span>, são constantes.</p>
+<p>Se <span class="math inline">\(a_i=\frac{1}{n-2m}\mathbb{I}_{[m+1,n-m]}(i)\)</span>, com <span class="math inline">\(m=\lfloor(n-1)\alpha\rfloor\)</span> e <span class="math inline">\(\alpha\in[0,1/2)\)</span> então <span class="math inline">\(\hat{\mu}\)</span> é chamado de <strong>média truncada</strong> (ou <span class="math inline">\(\alpha\)</span><em>-trimmed means</em>), i.e. <span class="math display">\[\bar{X}_\alpha=\frac{1}{n-2m}\sum_{i=m+1}^{n-m}Y_i.\]</span></p>
+</div>
+</div></section>
+<section id="m-estimadores-de-escala" class="slide level2 center" data-background-color="#172a46">
+<h2>M-estimadores de escala</h2>
+</section>
+<section id="estimadores-para-dispersão" class="slide level2">
+<h2>Estimadores para dispersão</h2>
+<div style="text-align: justify">
+
+<p>Sabemos que o estimador <span class="math inline">\(S=\left[\frac{1}{n-1}\sum_{i=1}^n(X_i-\bar{X})\right]^{1/2}\)</span> é uma medida que quantifica a dispersão em uma amostra aleatória. Se a amostra é contaminada por observaçãoes discrepantes, a medida <span class="math inline">\(S\)</span> será comprometida.</p>
+<p>Uma alternativa para <span class="math inline">\(S\)</span> é dada por <span class="math display">\[DM(\mathbf{X})=\frac1n\sum_{i=1}^n|X_i-\bar{X}|.\]</span> <span class="math inline">\(DM(\mathbf{X})\)</span>, ao igual que <span class="math inline">\(S\)</span>, é sensível a dados atípicos. Observe que as duas medidas são função de <span class="math inline">\(\bar{X}\)</span>.</p>
+<p>Em cenários contaminados, uma alternativa robusta é dada por <span class="math display">\[MAD(\mathbf{X})=\mathrm{Med}|\mathbf{X}-\mathrm{Med}(\mathbf{X})|.\]</span></p>
+</div></section>
+<section id="estimadores-para-dispersão-1" class="slide level2">
+<h2>Estimadores para dispersão</h2>
+<div style="text-align: justify">
+
+<p>Para que um estimador <span class="math inline">\(SD\)</span> seja considerado de dispersão, o mesmo deve satisfazer duas condições:</p>
+<ul>
+<li><span class="math inline">\(SD(\mathbf{X}+c)=SD(\mathbf{X})\)</span>;</li>
+<li><span class="math inline">\(SD(\mathbf{cX})=|c|SD(\mathbf{X})\)</span>.</li>
+</ul>
+<p><br></p>
+<div id="exm-exemplo11" class="theorem example">
+<p><span class="theorem-title"><strong>Exemplo 11 </strong></span>As seguintes medidas <span class="math inline">\(S_n=\left(\frac1n\sum_{i=1}^n(X_i-\bar{X}_n)^2\right)^{1/2}\)</span>, <span class="math inline">\(MAD(\mathbf{X})=Med\left\{\left|\mathbf{X}-Med(\mathbf{X})\right|\right\}\)</span> e <span class="math inline">\(DM_n=\frac1n\sum_{i=1}^n|X_i-\bar{X}_n|\)</span> satisfazem as duas condições acima.</p>
+</div>
+</div></section>
+<section id="estimadores-para-dispersão-2" class="slide level2">
+<h2>Estimadores para dispersão</h2>
+<div style="text-align: justify">
+
+<p>Outras duas medidas para dispersão são:</p>
+<ul>
+<li><p><strong>Amplitude:</strong> <span class="math inline">\(Y_n-Y_1:=\max\{X_1,X_2,\ldots,X_n\}-\min\{X_1,X_2,\ldots,X_n\}\)</span>;</p></li>
+<li><p><strong>Amplitude interquantílica:</strong> <span class="math inline">\(IQR(X)=Y_{n-m+1}-Y_{m}\)</span>, onde <span class="math inline">\(m=\lfloor n/4\rfloor\)</span>;</p></li>
+<li><p><strong>Diferença média de Gini:</strong> <span class="math inline">\(G_n=\frac{1}{n(n-1)}\sum_{i=1}^n\sum_{j=1}^n|X_i-X_j|=\frac{2}{n(n-1)}\sum_{i=1}^n(2i-n-1)Y_i\)</span>;</p></li>
+<li><p><strong>Estimador <span class="math inline">\(Q_n\)</span>:</strong> <span class="math inline">\(Q_n(\mathbf{X})=c\{|X_i-X_j|; i&lt;j\}_{(k)}\)</span>, onde <span class="math inline">\(c=2.2191\)</span> no cenário gaussiano e <span class="math inline">\(k=\displaystyle\binom{\lfloor\frac{n}{2}\rfloor+1}{2}\)</span>. Na prática, o estimador <span class="math inline">\(Q_n\)</span> é aproximadamente o primeiro quantil das diferenças <span class="math inline">\(|X_i-X_j|\)</span>;</p></li>
+</ul>
+</div></section>
+<section id="medidas-de-robustez" class="slide level2 center" data-background-color="#172a46">
+<h2>Medidas de robustez</h2>
+</section>
+<section id="curva-de-sensibilidade" class="slide level2">
+<h2>Curva de sensibilidade</h2>
+<div style="text-align: justify">
+
+<div id="def-definicao6" class="theorem definition">
+<p><span class="theorem-title"><strong>Definição 6 (Curva de sensibilidade) </strong></span>Considere uma amostra aleatória <span class="math inline">\(X_1.X_2,\ldots,X_{n-1}\)</span> e <span class="math inline">\(T_n:=T_n(X_1,X_2,\ldots,X_{n})\)</span> um estimador. A <strong>curva de sensibilidade</strong> do estimador <span class="math inline">\(T_n\)</span> define-se como uma função de <span class="math inline">\(x\)</span>, tal que <span class="math display">\[SC_n(x,T_n)=n\left[T_n(x_1.x_2,\ldots,x_{n-1},x)-T_{n-1}(x_1,x_2,\ldots,x_{n-1})\right].\]</span></p>
+</div>
+<div class="fragment">
+<div id="exm-exemplo12" class="theorem example">
+<p><span class="theorem-title"><strong>Exemplo 12 </strong></span>A curva de sensibilidade da média aritmética <span class="math inline">\(T_n=\bar{x}_n\)</span> é dada por</p>
+<div class="math">
+<p><span class="math display">\[\begin{align*}
+    SC_n\left(x,\bar{x}_n\right)&amp;=
+    n\left[\frac{x+\sum_{i=1}^{n-1}x_i}{n}-\frac{\sum_{i=1}^{n-1}x_i}{n-1}\right]
+    =n\left[\frac{(n-1)x-\sum_{i=1}^{n-1}x_i}{n(n-1)}\right]\\
+    &amp;=x-\bar{x}_{n-1}
+  \end{align*}\]</span></p>
+</div>
+<p>A curva de sensibilidade é uma função <strong>ilimitada</strong>, o que significa que uma única observação pode ter um efeito devastador nas propriedades da média amostral.</p>
+</div>
+</div>
+</div></section>
+<section id="função-de-influência" class="slide level2">
+<h2>Função de influência</h2>
+<div style="text-align: justify">
+
+<p>A função de influência (IF) é um dos mais importantes instrumentos disponı́veis para o estudo das propriedades de robustez de um estimador.</p>
+<p>A proposta inicial da IF é a mesma ideia presente na curva de sensibilidade, mas fazendo a dimensão da amostra tender para infinito, ou seja, passando a trabalhar num contexto assintótico.</p>
+<p><br></p>
+<div id="def-influence" class="theorem definition">
+<p><span class="theorem-title"><strong>Definição 7 (Funcional) </strong></span>Um funcional estatístico é uma função que a cada elemento de um espaço distribuições faz corresponder um valor real, ou um vector de valores reais, i.e.,</p>
+<div class="math">
+<span class="math display">\[\begin{align*}
+T\colon \mathcal{D}(T)\subset\mathcal{F} &amp; \longrightarrow \mathbb{R}^p\\
+F &amp;\mapsto T(F),
+\end{align*}\]</span>
+<p>onde <span class="math inline">\(\mathcal{D}(T)\)</span> representa o domínio de <span class="math inline">\(T\)</span> e <span class="math inline">\(\mathcal{F}\)</span> é o espaço de distribuições.</p>
+</div>
+</div>
+</div></section>
+<section id="função-de-influência-1" class="slide level2">
+<h2>Função de influência</h2>
+<div style="text-align: justify">
+
+<div id="exm-exemplo13" class="theorem example">
+<p><span class="theorem-title"><strong>Exemplo 13 </strong></span>Considere uma variável aleatória <span class="math inline">\(X\)</span> com função de distribuição <span class="math inline">\(F\)</span>. O valor esperado de <span class="math inline">\(X\)</span>, dado por <span class="math display">\[T(F)=\mathbb{E}_F[X]=\int_{-\infty}^\infty x\,dF(x).\]</span> Se <span class="math inline">\(F\)</span> é estimada pela função de distribuição empírica, definida como <span class="math inline">\(F_n(x)=\frac1n\sum_{i=1}^n\mathbb{I}_{(-\infty,x]}(X_i)\)</span>, então <span class="math inline">\(T(F)\)</span> pode ser estimada por <span class="math display">\[T(F_n)=\frac1n\sum_{i=1}^nX_i.\]</span></p>
+</div>
+</div></section>
+<section id="função-de-influência-2" class="slide level2">
+<h2>Função de influência</h2>
+<div style="text-align: justify">
+
+<div id="exm-exemplo14" class="theorem example">
+<p><span class="theorem-title"><strong>Exemplo 14 </strong></span>Considere uma variável aleatória <span class="math inline">\(X\)</span> com função de distribuição <span class="math inline">\(F\)</span>. Seja <span class="math display">\[T(F)=F^{-1}(p)=\inf\{x:F(x)\ge p,\,\,\, p\in(0,1)\}\]</span> o <span class="math inline">\(p\)</span>-ésimo quantil de <span class="math inline">\(F\)</span>. Então <span class="math inline">\(T(F_n)=F_n^{-1}(p)\)</span> é o <span class="math inline">\(p\)</span>-ésimo quantil amostral.</p>
+</div>
+<p><br></p>
+<blockquote>
+<p>Algumas propriedades da função de distribuição empírica podem ser verificadas em <span class="citation" data-cites="vander:1998">Van der Vaart (<a href="#/referências" role="doc-biblioref" onclick="">1998</a>)</span>, por exemplo:</p>
+<ul>
+<li>Lei forte dos grandes números: <span class="math inline">\(F_n(x)\overset{q.c.}{\longrightarrow}F(x)\)</span>, quando <span class="math inline">\(n\to\infty\)</span>;</li>
+<li>Teorema central do limite: <span class="math inline">\(\sqrt{n}(F_n(x)-F(x))\overset{d}{\longrightarrow}N(0,F(x)(1-F(x)))\)</span>.</li>
+</ul>
+</blockquote>
+</div></section>
+<section id="função-de-influência-3" class="slide level2">
+<h2>Função de influência</h2>
+<div style="text-align: justify">
+
+<div id="def-FI" class="theorem definition">
+<p><span class="theorem-title"><strong>Definição 8 (Função de influência) </strong></span>Seja <span class="math inline">\(F\)</span> uma distribuição pertencente ao domínimo de <span class="math inline">\(T\)</span>. Define-se a função de influência (IF) do funcional <span class="math inline">\(T\)</span> em <span class="math inline">\(F\)</span> à função <span class="math display">\[IF(x; T, F)=T'_x(F)=\underset{\varepsilon\to0^{+}}{\lim}\frac{T((1-\varepsilon)F+\varepsilon\delta_x)-T(F)}{\varepsilon}\]</span> definida em todos os valores <span class="math inline">\(x\in\mathcal{X}\subset\mathbb{R}\)</span> para os quais o limite existe. <span class="math inline">\(\delta_x\)</span> representa a distribuição discreta degenerada em <span class="math inline">\(x\)</span></p>
+</div>
+<blockquote>
+<p>Uma definição equivalente da função de influência é dada por <span class="math display">\[IF(x; T, F)=\frac{\partial}{\partial\varepsilon}T(F_{\varepsilon,x})\Biggr|_{\varepsilon=0},\]</span> onde <span class="math inline">\(F_{\varepsilon,x}=(1-\varepsilon)F+\varepsilon\delta_x\)</span>.</p>
+</blockquote>
+</div></section>
+<section id="função-de-influência-5" class="slide level2">
+<h2>Função de influência</h2>
+<div style="text-align: justify">
+
+<div id="exm-exemplo15" class="theorem example">
+<p><span class="theorem-title"><strong>Exemplo 15 </strong></span>Alguns exemplos para estimadores conhecidos:</p>
+<ul>
+<li><strong>Média amostral:</strong> Seja <span class="math inline">\(T_n=\frac1n\sum_{i=1}^nX_i\)</span>, então</li>
+</ul>
+<div class="math">
+<span class="math display">\[\begin{align*}
+T((1-\varepsilon)F+\varepsilon\delta_x)&amp;=(1-\varepsilon)\int u\,dF(u)+\varepsilon\int u\,d\delta_x(u)\\
+&amp;=(1-\varepsilon)T(F)+\varepsilon x=T(F)+\varepsilon(x-T(F)).
+\end{align*}\]</span>
+</div>
+<p>Daí,</p>
+<div class="math">
+<span class="math display">\[\begin{align*}
+IF(x; T, F)&amp;=\underset{\varepsilon\to0^{+}}{\lim}\frac{T(F)+\varepsilon(x-T(F))-T(F)}{\varepsilon}
+=x-T(F). \quad\checkmark
+\end{align*}\]</span>
+</div>
+<p>O resultado mostra que, a influência de uma única observação no valor da estimativa pode ser tão grande quanto se queira.</p>
+</div>
+</div></section>
+<section id="função-de-influência-6" class="slide level2">
+<h2>Função de influência</h2>
+<div style="text-align: justify">
+
+<ul>
+<li><strong>Média aparada (ou <em>trimmed</em>):</strong> Seja <span class="math inline">\(T_{\alpha,n}=\frac{1}{n-2\lfloor\alpha n\rfloor}\sum\limits_{i=\lfloor\alpha n\rfloor+1}^{n-\lfloor\alpha n\rfloor}Y_i\)</span>, onde <span class="math inline">\(Y_1,Y_2,\ldots,Y_n\)</span> representam as estatísticas de ordem da amostra aleatória. O funcional associado ao estimador <span class="math inline">\(T_{\alpha,n}\)</span> é dado por</li>
+</ul>
+<p><span class="math display">\[T_\alpha(F)=\frac{1}{1-2\alpha}\int_{\alpha}^{1-\alpha} F^{-1}(x)\,dx.\]</span></p>
+</div></section>
+<section id="função-de-influência-7" class="slide level2">
+<h2>Função de influência</h2>
+<div style="text-align: justify">
+
+<p>Daí,</p>
+<div class="math">
+<span class="math display">\[\begin{align*}
+  IF(x;T_\alpha,F)&amp;=\begin{cases}
+  \frac{1}{1-2\alpha}(F^{-1}(\alpha)-W(F)), &amp; x&lt;F^{-1}(\alpha);\\
+  \frac{1}{1-2\alpha}(x-W(F)), &amp; F^{-1}(\alpha)\le x\le F^{-1}(1-\alpha);\\
+  \frac{1}{1-2\alpha}(F^{-1}(1-\alpha)-W(F)), &amp; x&gt;F^{-1}(1-\alpha),
+  \end{cases}
+\end{align*}\]</span>
+</div>
+<p>onde <span class="math inline">\(W(F)=(1-2\alpha)T_\alpha(F)+\alpha F^{-1}(\alpha)+\alpha F^{-1}(1-\alpha)\)</span>.</p>
+</div></section>
+<section id="função-de-influência-8" class="slide level2">
+<h2>Função de influência</h2>
+<div style="text-align: justify">
+
+<p>Funções de influência da média (<span class="math inline">\(T_0\)</span>), de <span class="math inline">\(T_{0.05}\)</span> , <span class="math inline">\(T_{0.10}\)</span> e a mediana (<span class="math inline">\(T_{0.50}\)</span>) para a distribuição normal padrão.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/IF_trimmed.png" width="700"></p>
+</figure>
+</div>
+</div></section>
+<section id="função-de-influência-9" class="slide level2">
+<h2>Função de influência</h2>
+<div style="text-align: justify">
+
+<ul>
+<li><strong>Desvio absoluto mediano (MAD):</strong> O funcional associado ao estimador é dado por <span class="math display">\[MAD(F)=c\,Med(G)=c\,G^{-1}(0.5),\]</span> onde <span class="math inline">\(c=\frac{1}{\Phi^{-1}(3/4)}\)</span>, <span class="math inline">\(F\)</span> representa a distribuição de <span class="math inline">\(X\)</span> e <span class="math inline">\(G\)</span> representa a distribuição de <span class="math inline">\(|X-Med(F)|\)</span>. O funcional pode ainda ser definido como a solução da equação</li>
+</ul>
+<p><span class="math display">\[F\left(Med(F)+\frac{MAD(F)}{c}\right)-F\left(Med(F)-\frac{MAD(F)}{c}\right)=\frac12,\]</span> onde <span class="math inline">\(G(u)=F(Med(F)+u)-F(Med(F)-u)\)</span>.</p>
+</div></section>
+<section id="função-de-influência-10" class="slide level2">
+<h2>Função de influência</h2>
+<div style="text-align: justify">
+
+<p>Dessa forma, assumindo uma distribuição normal padrão, temos que</p>
+<div class="math">
+<span class="math display">\[\begin{align*}
+  IF(x;MAD,\Phi)&amp;=\begin{cases}
+  -\frac{c}{4\phi(\Phi^{-1}(\frac14))}, &amp; |x|&lt;\Phi^{-1}(\frac34);\\
+  \frac{c}{4\phi(\Phi^{-1}(\frac14))}, &amp; |x|&gt;\Phi^{-1}(\frac34).
+  \end{cases}
+\end{align*}\]</span>
+</div>
+</div></section>
+<section id="função-de-influência-11" class="slide level2">
+<h2>Função de influência</h2>
+<div style="text-align: justify">
+
+<p>Funções de influência do desvio absoluto mediano (<span class="math inline">\(MAD\)</span>), do desvio padrão (<span class="math inline">\(\sigma\)</span>) e do desvio médio (<span class="math inline">\(D\)</span>) para a distribuição normal padrão.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/IF_mad.png" width="700"></p>
+</figure>
+</div>
+</div></section>
+<section id="ponto-de-ruptura-ou-breakdown-point" class="slide level2">
+<h2>Ponto de ruptura ou <em>breakdown point</em></h2>
+<div style="text-align: justify">
+
+<div id="def-ponto_rup" class="theorem definition">
+<p><span class="theorem-title"><strong>Definição 9 (Ponto de ruptura) </strong></span>Numa dada amostra aleatória <span class="math inline">\(X_1,X_2,\ldots,X_n\)</span> substituem-se <span class="math inline">\(m\)</span> observações quaisquer, <span class="math inline">\(X_{i_1},\ldots, X_{i_m}\)</span> por valores arbitrários <span class="math inline">\(\mathcal{Y}_1,\ldots,\mathcal{Y}_m\)</span> e consideramos a nova amostra com os valores substituídos <span class="math inline">\((Z_1,\ldots, Z_n)\)</span>. O ponto de ruptura (em dimensão finita) de <span class="math inline">\(T_n\)</span> define-se como</p>
+<div class="math">
+<span class="math display">\[\begin{align*}
+  \varepsilon^*_n(T_n)&amp;=\varepsilon^*_n(T_n;x_1,x_2,\ldots,x_n)\\
+  &amp;=\frac1n\max\left\{\underset{i_1,\ldots,i_m}{\max}\underset{\mathcal{y}_1,\ldots,\mathcal{y}_m}{\sup}|T_n(z_1,z_2,\ldots,z_n)|&lt;\infty\right\}.
+\end{align*}\]</span>
+</div>
+</div>
+</div></section>
+<section id="ponto-de-ruptura-ou-breakdown-point-1" class="slide level2">
+<h2>Ponto de ruptura ou <em>breakdown point</em></h2>
+<div style="text-align: justify">
+
+<div id="exm-exemplo16" class="theorem example">
+<p><span class="theorem-title"><strong>Exemplo 16 </strong></span>Em relação aos estimadores de localização considerados anteriormente, pode-se verificar que:</p>
+<ul>
+<li><p>para a média aritmética: <span class="math inline">\(\varepsilon^∗_n = 0\)</span>;</p></li>
+<li><p>para a média <em>trimmed</em> a <span class="math inline">\(100\times\alpha\%\)</span>: <span class="math inline">\(\varepsilon^∗_n=\frac1n\lfloor\alpha n\rfloor\)</span>;</p></li>
+<li><p>para a mediana: <span class="math inline">\(\varepsilon^∗_n = \frac{\lfloor(n + 1)/2\rfloor − 1}{n}\)</span>;</p></li>
+<li><p>para a variância, desvio padrão e desvio médio: <span class="math inline">\(\varepsilon^∗_n = 0\)</span>;</p></li>
+<li><p>para o desvio absoluto mediano: <span class="math inline">\(\varepsilon^∗_n = \frac{\lfloor(n + 1)/2\rfloor − 1}{n}\)</span>;</p></li>
+<li><p>para o IQR: <span class="math inline">\(\varepsilon^∗_n = \frac{\lfloor(n + 3)/4\rfloor − 1}{n}\)</span>;</p></li>
+<li><p>para o estimador <span class="math inline">\(Q_n\)</span>: <span class="math inline">\(\varepsilon^∗_n = \frac{\lfloor(n + 1)/2\rfloor − 1}{n}\)</span>.</p></li>
+</ul>
+</div>
+</div></section>
+<section id="referências" class="slide level2 smaller scrollable">
+<h2>Referências</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-hampel:ronchetti:rousseeuw:stahel:1986" class="csl-entry" role="doc-biblioentry">
+Hampel, F., Ronchetti, E., Rousseeuw, P., and Stahel, W. (1986), <em>Robust statistics: The approach based on influence functions</em>, John Wiley &amp; sons.
+</div>
+<div id="ref-hogg:mckean:craig:2004" class="csl-entry" role="doc-biblioentry">
+Hogg, R., McKean, J., and Craig, A. (2004), <em>Introduction to mathematical statistics</em>, Prentice Hall.
+</div>
+<div id="ref-huber:2004" class="csl-entry" role="doc-biblioentry">
+Huber, P. J. (2004), <em>Robust statistics</em>, John Wiley &amp; Sons.
+</div>
+<div id="ref-maronna:martin:yohai:2006" class="csl-entry" role="doc-biblioentry">
+Maronna, R., Martin, R. D., and Yohai, V. (2006), <em>Robust statistics</em>, John Wiley &amp; sons.
+</div>
+<div id="ref-mood:graybill:boes:1974" class="csl-entry" role="doc-biblioentry">
+Mood, A., Graybill, F., and Boes, D. (1974), <em>Introduction to the theory of statistics</em>, McGraw-Hill Higher Education.
+</div>
+<div id="ref-vander:1998" class="csl-entry" role="doc-biblioentry">
+Van der Vaart, A. W. (1998), <em>Asymptotic statistics</em>, Cambridge university press.
+</div>
+</div>
+</section>
+<section id="política-de-proteção-aos-direitos-autorais" class="slide level2" data-background-color="white">
+<h2>Política de proteção aos direitos autorais</h2>
+<div style="text-align: justify">
+<blockquote>
+<p><span style="color:grey"><font size="6">O conteúdo disponível consiste em material protegido pela legislação brasileira, sendo certo que, por ser o detentor dos direitos sobre o conteúdo disponível na plataforma, o <strong>LECON</strong> e o <strong>NEAEST</strong> detém direito exclusivo de usar, fruir e dispor de sua obra, conforme Artigo 5<sup>o</sup>, inciso XXVII, da Constituição Federal e os Artigos 7<sup>o</sup> e 28<sup>o</sup>, da Lei 9.610/98. A divulgação e/ou veiculação do conteúdo em sites diferentes à plataforma e sem a devida autorização do <strong>LECON</strong> e o <strong>NEAEST</strong>, pode configurar violação de direito autoral, nos termos da Lei 9.610/98, inclusive podendo caracterizar conduta criminosa, conforme Artigo 184<sup>o</sup>, §1<sup>o</sup> a 3<sup>o</sup>, do Código Penal. É considerada como contrafação a reprodução não autorizada, integral ou parcial, de todo e qualquer conteúdo disponível na plataforma.</font></span></p>
+</blockquote>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-right">
+<figure>
+<p><img data-src="images/logo_neaest.png" width="500"></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-left">
+<figure>
+<p><img data-src="images/logo_lecon.png" width="500"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p><span style="color:grey"><font size="4">Material elaborado pela equipe LECON/NEAEST: Alessandro J. Q. Sarnaglia, Bartolomeu Zamprogno, Fabio A. Fajardo, Luciana G. de Godoi e Nátaly A. Jiménez.</font></span></p>
+<p><img src="images/logo_lecon.png" class="slide-logo"></p>
+<div class="footer footer-default">
+<p><a href="https://ffajardo64.github.io/statistical_learning/ciencia_de_dados.html">Introdução à Ciência de Dados</a></p>
+</div>
+</div></section>
+
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="aula1_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="aula1_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="aula1_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="aula1_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="aula1_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="aula1_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="aula1_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="aula1_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="aula1_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="aula1_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="aula1_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'smaller': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'fast',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1600,
+
+        height: 900,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const clipboard = new window.ClipboardJS('.code-copy-button', {
+        target: function(trigger) {
+          return trigger.previousElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copiada");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copiada");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      });
+      function tippyHover(el, contentFn) {
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto-reveal',
+          placement: 'bottom-start'
+        };
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          return note.innerHTML;
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>
